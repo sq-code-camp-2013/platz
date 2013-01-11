@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110022543) do
+ActiveRecord::Schema.define(:version => 20130111215155) do
 
   create_table "event_attendees", :force => true do |t|
     t.integer  "user_id"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(:version => 20130110022543) do
     t.datetime "occurs_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "images", :force => true do |t|
+    t.integer  "event_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "source_file_name"
+    t.string   "source_content_type"
+    t.integer  "source_file_size"
+    t.datetime "source_updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -2,13 +2,20 @@ Platz::Application.routes.draw do
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
+  get "create" =>"events#new", :as => "newevent"
+  get "show" => "events#show", :as => "showevent"
+  get "showall" => "events#showall", :as => "showall"
   root :to => "events#index"
-
+  
   resources :sessions
   resources :users do
     resources :events
+  end
+
+  resources :events do
     post 'attend'
   end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
