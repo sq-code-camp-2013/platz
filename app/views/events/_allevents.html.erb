@@ -1,40 +1,4 @@
-<h3>All Events</h3>
-<table>
-  <tr>
-    <th>
-      Name
-    </th>
-    <th>
-      Address
-    </th>
-    <th>
-      Date
-    </th>
-  </tr>
+<h1><%= @title %></h1>
 <% @events.each do |event| %>
-  <tr>
-    <td>
-      <%= event.name %>
-    </td>
-    <td>
-      <%= event.street %></br>
-      <%= event.zip_code %>
-    </td>
-    <td>
-      <%= event.occurs_at.try(:strftime, "%B %d, %l:%M %p") %>
-    </td>
-    <td>
-      <% if event.created_by?(current_user) %>
-        <%= link_to 'edit', edit_event_url(event) %>
-        <%= link_to "destroy", user_event_url(current_user, :id => event.id), :method => :delete, :confirm => "Are you sure?" %>
-      <% else %>
-        <% if event.attended_by?(current_user) %>
-          Already attending! 
-        <% else %>
-          <%= link_to 'attend', event_attend_url(event, :user_id => current_user.id), :method => :post %>
-        <% end %>
-      <% end %>
-    </td>
-  </tr>
+  <%= render :partial => 'event', :object => event %> 
 <% end %>
-</table>

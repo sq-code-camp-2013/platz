@@ -8,6 +8,7 @@ gem "bcrypt-ruby", :require => "bcrypt"
 gem 'bootstrap-sass', '2.1' #involved in visuals and bootstrap
 gem 'bootstrap-will_paginate', '0.0.6'
 gem "paperclip", "~> 3.0"
+gem 'bluecloth' 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

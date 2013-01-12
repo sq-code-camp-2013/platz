@@ -2,15 +2,22 @@ class EventsController < ApplicationController
   before_filter :require_login
 
   def index
+    @title = "Upcoming Events"
     @user = User.find_by_id(params[:user_id])
     if @user.present?
       @events = current_user.events
     else
-      @events = Event.all
+      @events = Event.order(:occurs_at).all
           Rails.logger.warn "***************"
           Rails.logger.warn @events.count
     end
-    @created_events = current_user.created_events
+    @created_events = current_user.created_events.order(:occurs_at)
+  end
+
+  def archive
+    @title = "Past Events"
+    @events = Event.where("occurs_at < ?", Time.now).order(:occurs_at).reverse
+    render "index"
   end
 
 
@@ -42,7 +49,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = current_user.created_events.find(params[:id])
+    @event = Event.find(params[:id])
   end
 
   def destroy

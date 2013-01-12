@@ -1,16 +1,55 @@
 <div>
 <div>
   <h1><%= @event.name %></h1>
-  <div>
-    <%= @event.street %></br>
-    <%= @event.zip_code %>
+  <div class="short-details">
+    <div>
+      <h4> Location </h4>
+      <%= @event.street %></br>
+      <%= @event.zip_code %>
+    </div>
+    <div>
+      <h4> Time </h4> 
+      <%= @event.occurs_at.try(:strftime, "%B %d, %l:%M %p") %>
+    </div>
+    <div> 
+      <h4> Highlights </h4> 
+      <%= BlueCloth.new(@event.highlights).to_html.html_safe %>
+    </div>
+
+    <div class="rsvp">
+       <% if @event.attended_by?(current_user) %>
+          Already attending! 
+        <% else %>
+          <%= button_to 'Attend', event_attend_url(@event, :user_id => current_user.id), :method => :post, :class=>"btn btn-primary" %>
+        <% end %>
+    </div>
   </div>
+
   <div>
-    <%= @event.occurs_at.try(:strftime, "%B %d, %l:%M %p") %>
+    <h4> Details </h4> 
+    <%= BlueCloth.new(@event.summary).to_html.html_safe %>
+  </br>
+    <h4> Contact </h4> 
+    <%= @event.creator.email %>
   </div>
   <% if @event.created_by?(current_user) %>
     <%= link_to 'edit', edit_event_url(@event) %>
   <% else %>
     <%= link_to 'attend', event_attend_url(@event, :user_id => current_user.id), :method => :post %>
   <% end %>
+  <div class="upload-photos">
+
+  <h3> Uploaded Photos </h3> 
+    <% @event.images.each do |image| %>
+      <%= image_tag image.source.url %>
+    <% end %>
+  <h3> Upload a New Photo </h3>  
+  <%= form_for :image, :url => event_images_path(@event), :html => { :multipart => true } do |form| %>
+    <%= form.file_field :source %>
+    <br>
+    <%= form.submit "Add Photo", :class => "btn btn-primary" %> 
+  <% end %>
+  </div> 
+
+
 </div>

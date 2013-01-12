@@ -4,7 +4,8 @@ Platz::Application.routes.draw do
   get "signup" => "users#new", :as => "signup"
   get "create" =>"events#new", :as => "newevent"
   get "show" => "events#show", :as => "showevent"
-  get "showall" => "events#showall", :as => "showall"
+  get "archive" => "events#archive", :as => "archive"
+  # get "showall" => "events#showall", :as => "showall"
   root :to => "events#index"
   
   resources :sessions
@@ -14,6 +15,7 @@ Platz::Application.routes.draw do
 
   resources :events do
     post 'attend'
+    resources :images 
   end
 
 
