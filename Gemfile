@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'inherited_resources'
-gem 'mysql2'
+gem 'sqlite3'
 gem 'activerecord-mysql-adapter'
 gem "bcrypt-ruby", :require => "bcrypt"
 gem 'bootstrap-sass', '2.1' #involved in visuals and bootstrap
